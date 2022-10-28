@@ -37,9 +37,17 @@ namespace AssemblerRIBJ
 
                 if (lines[i]!=null)
                 {
-                    Instruction inst = Instruction.getInstruction(lines[i], (uint)lineCounter + 1, lables);
-                    code.Add(inst.getMachineCode());
-                    lineCounter++;
+                    try
+                    {
+                        Instruction inst = Instruction.getInstruction(lines[i], (uint)lineCounter + 1, lables);
+                        code.Add(inst.getMachineCode() + $"      #{lines[i]}");
+                        lineCounter++;
+                    }catch(InstructionError e)
+                    {
+                        Console.WriteLine(e.getMessage());
+                        File.WriteAllText("out.txt",e.getMessage());
+                        return;
+                    }
                 }
 
             }

@@ -308,7 +308,7 @@ namespace AssemblerRIBJ
         /// <returns>machine code as a string</returns>
         public override string getMachineCode()
         {
-            return (toBianary((lable.line - (int)lineNum) * 4, 14) + toUBianary(rs1, 5) + toUBianary(rs1, 5) + getTypeCode()).PadLeft(32, '0');
+            return (toBianary((lable.line - (int)lineNum) * 4, 14) + toUBianary(rs2, 5) + toUBianary(rs1, 5) + getTypeCode()).PadLeft(32, '0');
         }
     }
     /// <summary>

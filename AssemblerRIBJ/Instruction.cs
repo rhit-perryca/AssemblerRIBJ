@@ -91,7 +91,6 @@ namespace AssemblerRIBJ
 
                 //get instruction name
                 String inst = parts[1];
-                Instruction instObj;
 
                 //initialize instruction based off of the name
                 if (RInstruction.hasInst(inst))
@@ -131,10 +130,6 @@ namespace AssemblerRIBJ
                 }
 
             }
-            catch (IndexOutOfRangeException e)
-            {
-                throw new InstructionError(line, "Instruction format invalid");
-            }
             catch (FormatException e)
             {
                 throw new InstructionError(line, "register not defined correctly");
@@ -150,7 +145,7 @@ namespace AssemblerRIBJ
         {
             if (reg[0] == 'r')
                 return UInt32.Parse(reg.Substring(1));
-            throw new IndexOutOfRangeException();
+            throw new FormatException();
         }
     }
     /// <summary>

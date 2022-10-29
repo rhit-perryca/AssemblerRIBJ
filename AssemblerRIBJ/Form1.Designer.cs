@@ -31,12 +31,12 @@
             this.components = new System.ComponentModel.Container();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.input = new System.Windows.Forms.RichTextBox();
-            this.output = new System.Windows.Forms.RichTextBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.buildBtn = new System.Windows.Forms.Button();
             this.showOriginal = new System.Windows.Forms.CheckBox();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.seps = new System.Windows.Forms.CheckBox();
+            this.output = new System.Windows.Forms.RichTextBox();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
@@ -44,31 +44,26 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Controls.Add(this.input);
             this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel2);
             this.flowLayoutPanel1.Controls.Add(this.output);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(844, 450);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1103, 453);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // input
             // 
+            this.input.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.input.Location = new System.Drawing.Point(3, 3);
             this.input.Name = "input";
             this.input.Size = new System.Drawing.Size(378, 447);
             this.input.TabIndex = 0;
             this.input.Text = "";
-            // 
-            // output
-            // 
-            this.output.Location = new System.Drawing.Point(515, 3);
-            this.output.Name = "output";
-            this.output.Size = new System.Drawing.Size(320, 447);
-            this.output.TabIndex = 2;
-            this.output.Text = "";
             // 
             // flowLayoutPanel2
             // 
@@ -115,11 +110,21 @@
             this.seps.Text = "Show seperators";
             this.seps.UseVisualStyleBackColor = true;
             // 
+            // output
+            // 
+            this.output.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.output.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.output.Location = new System.Drawing.Point(515, 3);
+            this.output.Name = "output";
+            this.output.Size = new System.Drawing.Size(585, 447);
+            this.output.TabIndex = 2;
+            this.output.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(844, 450);
+            this.ClientSize = new System.Drawing.Size(1112, 450);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "Form1";
             this.Text = "RIBJ Assembler";

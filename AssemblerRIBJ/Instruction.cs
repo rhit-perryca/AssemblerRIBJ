@@ -17,9 +17,9 @@ namespace AssemblerRIBJ
     /// </summary>
     class InstructionError : Exception
     {
-        uint line;
+        int line;
         string message;
-        public InstructionError(uint line, string message)
+        public InstructionError(int line, string message)
         {
             this.line = line;
             this.message = message;
@@ -79,7 +79,7 @@ namespace AssemblerRIBJ
         /// <param name="lables">list of lables in program</param>
         /// <returns></returns>
         /// <exception cref="InstructionError"></exception>
-        public static Instruction getInstruction(string full, uint line, List<Lable> lables)
+        public static Instruction getInstruction(string full, int line, List<Lable> lables)
         {
             try
             {
@@ -96,7 +96,21 @@ namespace AssemblerRIBJ
                 if (RInstruction.hasInst(inst))
                     return new RInstruction(inst, line, getReg(parts[0]), getReg(parts[2]), getReg(parts[3]));
                 if (IInstruction.hasInst(inst))
+                {
+
+                    if (inst.Equals("jalr")) {
+                        string lable = parts[2];
+                        foreach (Lable labelObj in lables)
+                        {
+                            if (labelObj.name.Equals(lable))
+                            {
+                                return new IInstruction(inst, line, getReg(parts[0]), labelObj);
+                            }
+                        }
+                        throw new InstructionError(line, "Lable not found");
+                    }
                     return new IInstruction(inst, line, getReg(parts[2]), getReg(parts[0]), Int32.Parse(parts[3]));
+                }
                 if (BInstruction.hasInst(inst))
                 {
 
@@ -106,7 +120,7 @@ namespace AssemblerRIBJ
                     {
                         if (labelObj.name.Equals(lable))
                         {
-                            return new BInstruction(inst, line, getReg(parts[2]), getReg(parts[3]), labelObj, line);
+                            return new BInstruction(inst, line, getReg(parts[2]), getReg(parts[3]), labelObj);
                         }
                     }
                     throw new InstructionError(line, $"lable {lable} does not exist");
@@ -159,7 +173,7 @@ namespace AssemblerRIBJ
     {
         uint rd, rs1, rs2;
         public static new readonly string[] instructions = { "add", "sub", "or", "and" };
-        public RInstruction(string inst, uint line, uint rd, uint rs1, uint rs2)
+        public RInstruction(string inst, int line, uint rd, uint rs1, uint rs2)
         {
             opType = 0b00;
             this.rd = rd;
@@ -212,12 +226,28 @@ namespace AssemblerRIBJ
         uint rs1, rd;
         int imm;
         public static new readonly string[] instructions = { "addi", "subi", "ori", "andi", "sli", "sri", "lw", "sw", "jalr" };
-        public IInstruction(string inst, uint line, uint rs1, uint rd, int imm)
+        public IInstruction(string inst, int line, uint rs1, uint rd, int imm)
         {
             opType = 1;
             this.rs1 = rs1;
             this.rd = rd;
             this.imm = imm;
+            if (!hasInst(inst))
+                throw new InstructionError(line, $"{inst} is not a valid instruction");
+            for (int i = 0; i < instructions.Length; i++)
+            {
+                if (instructions[i].Equals(inst))
+                {
+                    opSelector = (uint)i;
+                }
+            }
+        }
+        public IInstruction(string inst, int line, uint rd, Lable lable)
+        {
+            opType = 1;
+            rs1 = 0;
+            this.rd = rd;
+            imm = (lable.line - line) * 4;
             if (!hasInst(inst))
                 throw new InstructionError(line, $"{inst} is not a valid instruction");
             for (int i = 0; i < instructions.Length; i++)
@@ -274,16 +304,16 @@ namespace AssemblerRIBJ
     internal class BInstruction : Instruction
     {
         uint rs1, rs2;
-        uint lineNum = 0;
+        int lineNum = 0;
         Lable lable;
         public static new readonly string[] instructions = { "bgt", "blt", "bgte", "blte", "be", "bne" };
 
-        public BInstruction(string inst, uint line, uint rs1, uint rs2, Lable lable, uint lineNum)
+        public BInstruction(string inst, int line, uint rs1, uint rs2, Lable lable)
         {
             this.rs1 = rs1;
             this.rs2 = rs2;
             this.lable = lable;
-            this.lineNum = lineNum;
+            this.lineNum = line;
             if (!hasInst(inst))
                 throw new InstructionError(line, $"{inst} is not a valid instruction");
             for (int i = 0; i < instructions.Length; i++)
@@ -315,7 +345,7 @@ namespace AssemblerRIBJ
         public override string getMachineCode(bool seperators)
         {
             string sep = (seperators) ? "-" : "";
-            return (toBianary((lable.line - (int)lineNum) * 4, 14) +sep+ toUBianary(rs2, 5) +sep+ toUBianary(rs1, 5) +sep+ getTypeCode()).PadLeft(32, '0');
+            return (toBianary((lable.line -lineNum) * 4, 14) +sep+ toUBianary(rs2, 5) +sep+ toUBianary(rs1, 5) +sep+ getTypeCode()).PadLeft(32, '0');
         }
     }
     /// <summary>
@@ -323,13 +353,12 @@ namespace AssemblerRIBJ
     /// </summary>
     internal class JInstruction : Instruction
     {
-        int imm;
-        uint rd, lineNum;
+        uint rd;
+        int lineNum;
         Lable lable;
         public static new readonly string[] instructions = { "jal" };
-        public JInstruction(string inst, uint line, uint rd, uint lineNum, Lable lable)
+        public JInstruction(string inst, int line, uint rd, int lineNum, Lable lable)
         {
-            this.imm = imm;
             this.rd = rd;
             this.lable = lable;
             this.lineNum = lineNum;
@@ -364,7 +393,7 @@ namespace AssemblerRIBJ
         public override string getMachineCode(bool seperators)
         {
             string sep = (seperators) ? "-" : "";
-            return (toBianary((lable.line - (int)lineNum) * 4, 14) +sep+ toUBianary(rd, 5) +sep+ getTypeCode()).PadLeft(32, '0');
+            return (toBianary((lable.line - lineNum) * 4, 14) +sep+ toUBianary(rd, 5) +sep+ getTypeCode()).PadLeft(32, '0');
         }
     }
 }

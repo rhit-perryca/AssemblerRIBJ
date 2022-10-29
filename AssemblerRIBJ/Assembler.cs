@@ -29,7 +29,7 @@ namespace AssemblerRIBJ
 
                 if (code[i] != null)
                 {
-                        Instruction inst = Instruction.getInstruction(code[i], (uint)lineCounter + 1, lables);
+                        Instruction inst = Instruction.getInstruction(code[i], lineCounter + 1, lables);
                         codeOut.Add(inst.getMachineCode(showSeperators) + ((showOriginal)?$"      #{code[i]}":""));
                         lineCounter++;
                 }

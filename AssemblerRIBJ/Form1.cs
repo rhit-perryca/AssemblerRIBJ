@@ -15,6 +15,23 @@ namespace AssemblerRIBJ
         public Form1()
         {
             InitializeComponent();
+            output.ReadOnly = true;
+        }
+
+        private void makeCode(object sender, EventArgs e)
+        {
+            string[] lines = input.Lines;
+            try
+            {
+                string[] bin = Assembler.assembleCode(lines,showOriginal.Checked);
+                output.Lines = bin;
+            }
+            catch(InstructionError error)
+            {
+                
+
+                MessageBox.Show(error.getMessage(), "Error",MessageBoxButtons.OK);
+            }
         }
     }
 }

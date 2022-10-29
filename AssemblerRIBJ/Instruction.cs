@@ -134,6 +134,10 @@ namespace AssemblerRIBJ
             {
                 throw new InstructionError(line, "register not defined correctly");
             }
+            catch(Exception e)
+            {
+                throw new InstructionError(line, "The instruction is not formatted correctly");
+            }
         }
         /// <summary>
         /// gets a register nubmer based off of the name

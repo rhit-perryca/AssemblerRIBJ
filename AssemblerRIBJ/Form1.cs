@@ -23,7 +23,7 @@ namespace AssemblerRIBJ
             string[] lines = input.Lines;
             try
             {
-                string[] bin = Assembler.assembleCode(lines,showOriginal.Checked);
+                string[] bin = Assembler.assembleCode(lines,showOriginal.Checked,seps.Checked);
                 output.Lines = bin;
             }
             catch(InstructionError error)

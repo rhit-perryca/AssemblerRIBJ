@@ -36,7 +36,7 @@ namespace AssemblerRIBJ
     {
         public static readonly string[] instructions;
         public static bool hasInst(string inst) { return false; }
-        public abstract string getMachineCode();
+        public abstract string getMachineCode(bool seperators);
 
         /// <summary>
         /// Gets the type code for instruction
@@ -196,11 +196,12 @@ namespace AssemblerRIBJ
         /// gets the machine code for the line
         /// </summary>
         /// <returns>machine code as a string</returns>
-        public override string getMachineCode()
+        public override string getMachineCode(bool seperators)
         {
             string rs2Bin = toUBianary(rs2, 5), rs1Bin = toUBianary(rs1, 5), rdBin = toUBianary(rd, 5);
             string code = getTypeCode();
-            return (rs2Bin + rs1Bin + rdBin + code).PadLeft(32, '0');
+            string sep = (seperators) ? "-" : "";
+            return (rs2Bin +sep+ rs1Bin + sep + rdBin + sep + code).PadLeft(32, '0');
         }
     }
     /// <summary>
@@ -245,9 +246,10 @@ namespace AssemblerRIBJ
         /// gets the machine code for the line
         /// </summary>
         /// <returns>machine code as a string</returns>
-        public override string getMachineCode()
+        public override string getMachineCode(bool seperators)
         {
-            return (toBianary(imm, 14) + toUBianary(rs1, 5) + toUBianary(rd, 5) + getTypeCode()).PadLeft(32, '0');
+            string sep = (seperators) ? "-" : "";
+            return (toBianary(imm, 14) +sep+ toUBianary(rs1, 5) + sep + toUBianary(rd, 5) + sep + getTypeCode()).PadLeft(32, '0');
         }
     }
 
@@ -310,9 +312,10 @@ namespace AssemblerRIBJ
         /// gets the machine code for the line
         /// </summary>
         /// <returns>machine code as a string</returns>
-        public override string getMachineCode()
+        public override string getMachineCode(bool seperators)
         {
-            return (toBianary((lable.line - (int)lineNum) * 4, 14) + toUBianary(rs2, 5) + toUBianary(rs1, 5) + getTypeCode()).PadLeft(32, '0');
+            string sep = (seperators) ? "-" : "";
+            return (toBianary((lable.line - (int)lineNum) * 4, 14) +sep+ toUBianary(rs2, 5) +sep+ toUBianary(rs1, 5) +sep+ getTypeCode()).PadLeft(32, '0');
         }
     }
     /// <summary>
@@ -358,9 +361,10 @@ namespace AssemblerRIBJ
         /// gets the machine code for the line
         /// </summary>
         /// <returns>machine code as a string</returns>
-        public override string getMachineCode()
+        public override string getMachineCode(bool seperators)
         {
-            return (toBianary((lable.line - (int)lineNum) * 4, 14) + toUBianary(rd, 5) + getTypeCode()).PadLeft(32, '0');
+            string sep = (seperators) ? "-" : "";
+            return (toBianary((lable.line - (int)lineNum) * 4, 14) +sep+ toUBianary(rd, 5) +sep+ getTypeCode()).PadLeft(32, '0');
         }
     }
 }

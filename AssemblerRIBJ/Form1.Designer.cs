@@ -29,16 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.input = new System.Windows.Forms.RichTextBox();
             this.output = new System.Windows.Forms.RichTextBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.buildBtn = new System.Windows.Forms.Button();
             this.showOriginal = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.seps = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -74,10 +75,11 @@
             this.flowLayoutPanel2.AutoSize = true;
             this.flowLayoutPanel2.Controls.Add(this.buildBtn);
             this.flowLayoutPanel2.Controls.Add(this.showOriginal);
+            this.flowLayoutPanel2.Controls.Add(this.seps);
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(387, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(122, 52);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(122, 75);
             this.flowLayoutPanel2.TabIndex = 3;
             // 
             // buildBtn
@@ -102,6 +104,17 @@
             this.showOriginal.Text = "Show original code";
             this.showOriginal.UseVisualStyleBackColor = true;
             // 
+            // seps
+            // 
+            this.seps.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.seps.AutoSize = true;
+            this.seps.Location = new System.Drawing.Point(3, 55);
+            this.seps.Name = "seps";
+            this.seps.Size = new System.Drawing.Size(116, 17);
+            this.seps.TabIndex = 3;
+            this.seps.Text = "Show seperators";
+            this.seps.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -109,12 +122,12 @@
             this.ClientSize = new System.Drawing.Size(844, 450);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "Form1";
-            this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            this.Text = "RIBJ Assembler";
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -129,6 +142,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Button buildBtn;
         private System.Windows.Forms.CheckBox showOriginal;
+        private System.Windows.Forms.CheckBox seps;
     }
 }
 

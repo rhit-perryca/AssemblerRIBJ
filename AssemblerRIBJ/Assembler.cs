@@ -9,7 +9,7 @@ namespace AssemblerRIBJ
 {
     internal class Assembler
     {
-        public static string[] assembleCode(string[] code,bool showOriginal)
+        public static string[] assembleCode(string[] code,bool showOriginal,bool showSeperators)
         {
             List<Lable> lables = new List<Lable>();
             for (int i = 0; i < code.Length; i++)
@@ -30,18 +30,18 @@ namespace AssemblerRIBJ
                 if (code[i] != null)
                 {
                         Instruction inst = Instruction.getInstruction(code[i], (uint)lineCounter + 1, lables);
-                        codeOut.Add(inst.getMachineCode() + ((showOriginal)?$"      #{code[i]}":""));
+                        codeOut.Add(inst.getMachineCode(showSeperators) + ((showOriginal)?$"      #{code[i]}":""));
                         lineCounter++;
                 }
 
             }
             return codeOut.ToArray();
         }
-        public static void writeMachineCodeToFile(string[] code,bool showOriginal)
+        public static void writeMachineCodeToFile(string[] code,bool showOriginal,bool seps)
         {
             try
             {
-                string[] machineCode = assembleCode(code,showOriginal);
+                string[] machineCode = assembleCode(code,showOriginal,seps);
                 File.WriteAllLines("out.txt", machineCode);
             }catch(InstructionError e)
             {

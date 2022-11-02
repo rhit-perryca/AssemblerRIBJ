@@ -44,7 +44,7 @@ namespace AssemblerRIBJ
         /// <returns>Instruction type code</returns>
         public string getTypeCode()
         {
-            return toUBianary(opSelector, 5) + toUBianary(opType, 3);
+            return toUBianary(opSelector, 4) + toUBianary(opType, 2);
         }
         public uint opType, opSelector;
 
@@ -225,7 +225,7 @@ namespace AssemblerRIBJ
     {
         uint rs1, rd;
         int imm;
-        public static new readonly string[] instructions = { "addi", "subi", "ori", "andi", "sli", "sri", "lw", "sw", "jalr" };
+        public static new readonly string[] instructions = { "addi", "subi","ori", "sli", "sri", "lw", "sw", "jalr" };
         public IInstruction(string inst, int line, uint rs1, uint rd, int imm)
         {
             opType = 1;
@@ -247,7 +247,7 @@ namespace AssemblerRIBJ
             opType = 1;
             rs1 = 0;
             this.rd = rd;
-            imm = (lable.line - line) * 4;
+            imm = (lable.line - line) * 2;
             if (!hasInst(inst))
                 throw new InstructionError(line, $"{inst} is not a valid instruction");
             for (int i = 0; i < instructions.Length; i++)

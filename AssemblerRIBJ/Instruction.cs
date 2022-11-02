@@ -279,7 +279,7 @@ namespace AssemblerRIBJ
         public override string getMachineCode(bool seperators)
         {
             string sep = (seperators) ? "-" : "";
-            return (toBianary(imm, 14) +sep+ toUBianary(rs1, 5) + sep + toUBianary(rd, 5) + sep + getTypeCode()).PadLeft(32, '0');
+            return (toBianary(imm, 16) +sep+ toUBianary(rs1, 5) + sep + toUBianary(rd, 5) + sep + getTypeCode()).PadLeft(32, '0');
         }
     }
 
@@ -345,7 +345,7 @@ namespace AssemblerRIBJ
         public override string getMachineCode(bool seperators)
         {
             string sep = (seperators) ? "-" : "";
-            return (toBianary((lable.line -lineNum) * 4, 14) +sep+ toUBianary(rs2, 5) +sep+ toUBianary(rs1, 5) +sep+ getTypeCode()).PadLeft(32, '0');
+            return (toBianary((lable.line -lineNum) * 4, 16) +sep+ toUBianary(rs2, 5) +sep+ toUBianary(rs1, 5) +sep+ getTypeCode()).PadLeft(32, '0');
         }
     }
     /// <summary>
@@ -393,7 +393,7 @@ namespace AssemblerRIBJ
         public override string getMachineCode(bool seperators)
         {
             string sep = (seperators) ? "-" : "";
-            return (toBianary((lable.line - lineNum) * 4, 14) +sep+ toUBianary(rd, 5) +sep+ getTypeCode()).PadLeft(32, '0');
+            return (toBianary((lable.line - lineNum) * 4, 16) +sep+ toUBianary(rd, 5) +sep+ getTypeCode()).PadLeft(32, '0');
         }
     }
 }

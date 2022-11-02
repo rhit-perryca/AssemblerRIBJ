@@ -33,5 +33,15 @@ namespace AssemblerRIBJ
                 MessageBox.Show(error.getMessage(), "Error",MessageBoxButtons.OK);
             }
         }
+
+        private void seps_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void showOriginal_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

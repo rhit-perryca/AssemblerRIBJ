@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AssemblerRIBJ
-{
+{//test
     internal static class Program
     {
         /// <summary>

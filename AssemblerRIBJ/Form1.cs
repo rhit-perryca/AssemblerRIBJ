@@ -34,14 +34,9 @@ namespace AssemblerRIBJ
             }
         }
 
-        private void seps_CheckedChanged(object sender, EventArgs e)
+        private void copy_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void showOriginal_CheckedChanged(object sender, EventArgs e)
-        {
-
+            System.Windows.Forms.Clipboard.SetText(output.Text);
         }
     }
 }

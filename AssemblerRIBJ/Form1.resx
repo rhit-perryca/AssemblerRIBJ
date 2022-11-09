@@ -117,7 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="bindingSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <data name="input.Text" xml:space="preserve">
+    <value>relPrime:
+	Sp, subi, sp, 12
+	Fa.2, addi, r.0, 2
+	
+	Fa.1, sw, sp[0]
+	Fa.2, sw, sp[4]
+	Ra, sw, sp[8]
+
+	LOOP:
+	Ra, jal, GCD
+	END_LOOP, bne, r.6, r.1
+	Fa.2, lw, sp[4]
+	Fa.2, add, Fa.2,r.1
+	Fa.2, sw, sp[4]
+	R.0, jal, LOOP
+
+	END_LOOP:
+	Fa.1, lw, sp[0]
+	Fa.2, lw, sp[4]
+	Ra, lw, sp[8]
+	R.6, add, Fa.2, r.0
+	Sp, addi, sp, 12
+	Ra, jalr
+GCD:
+	Endif, bne, Fa.0,r.0
+	R.6, add, fa.1,r.0
+	Ra, jalr
+	Endif:
+	
+	gcdLoop:
+	gcdLoopEnd, bne, Fa.1, r.0
+	gcdLoopElse, blte, Fa.0, Fa.1
+	Fa.0, sub, Fa.0, Fa.1
+	gcdLoopElse:	
+	Fa.1, sub, Fa.1, Fa.0
+	R.0, jal, gcdLoop
+	
+	gcdLoopEnd:
+	R.6, add, r.0, Fa.0
+	Ra, jalr</value>
+  </data>
 </root>

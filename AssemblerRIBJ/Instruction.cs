@@ -1,8 +1,14 @@
 ﻿
 
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Data;
 using System.Linq;
+using System.Reflection.Emit;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 namespace AssemblerRIBJ
@@ -63,10 +69,7 @@ namespace AssemblerRIBJ
         /// <returns></returns>
         protected string toBianary(int num, int leading0s)
         {
-            char leading = '0';
-            if (num < 0)
-                leading = '1';
-            string output = Convert.ToString(num, 2).PadLeft(leading0s, leading);
+            string output = Convert.ToString(num, 2).PadLeft(leading0s, '0');
             return output.Substring(output.Length - leading0s);
         }
         /// <summary>
@@ -97,18 +100,17 @@ namespace AssemblerRIBJ
                     return new RInstruction(inst, line, getReg(parts[0]), getReg(parts[2]), getReg(parts[3]));
                 if (IInstruction.hasInst(inst))
                 {
-                    if (inst.Equals("sw") || inst.Equals("lw"))
+                    if (inst.Equals("sw")||inst.Equals("lw"))
                     {
                         int imm = Int16.Parse(Regex.Match(parts[2], @"\d+").Value);
                         string reg = parts[2].Split('[')[0];
                         return new IInstruction(inst, line, getReg(reg), getReg(parts[0]), imm);
                     }
-                    if (inst.Equals("jalr"))
-                    {
+                    if (inst.Equals("jalr")) {
                         int imm = 0;
                         if (parts.Length == 3)
                             imm = Int16.Parse(parts[2]);
-                        return new IInstruction(inst, line, getReg(parts[0]), 0, imm);
+                        return new IInstruction(inst, line, getReg(parts[0]),0,imm);
                     }
                     return new IInstruction(inst, line, getReg(parts[2]), getReg(parts[0]), Int16.Parse(parts[3]));
                 }
@@ -149,7 +151,7 @@ namespace AssemblerRIBJ
             {
                 throw new InstructionError(line, "register not defined correctly");
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new InstructionError(line, "The instruction is not formatted correctly. Your register number also might be out of the valid range(0-31).");
             }
@@ -165,7 +167,7 @@ namespace AssemblerRIBJ
             string reg = register.ToLower();
             if (reg.ToLower().Equals("sp"))
                 return 3;
-            if (reg.ToLower().Equals("ra"))
+            if(reg.ToLower().Equals("ra"))
                 return 2;
             if (reg.ToLower().Equals("pc"))
                 return 4;
@@ -201,14 +203,14 @@ namespace AssemblerRIBJ
                 }
                 else if (type.Equals("r"))
                 {
-                    if (number > 31)
+                    if (number>31)
                         throw new FormatException();
                     return number;
                 }
                 throw new FormatException();
 
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new FormatException();
             }
@@ -263,7 +265,7 @@ namespace AssemblerRIBJ
             string rs2Bin = toUBianary(rs2, 5), rs1Bin = toUBianary(rs1, 5), rdBin = toUBianary(rd, 5);
             string code = getTypeCode();
             string sep = (seperators) ? "-" : "";
-            return (rs2Bin + sep + rs1Bin + sep + rdBin + sep + code).PadLeft(32, '0');
+            return (rs2Bin +sep+ rs1Bin + sep + rdBin + sep + code).PadLeft(32, '0');
         }
     }
     /// <summary>
@@ -273,7 +275,7 @@ namespace AssemblerRIBJ
     {
         uint rs1, rd;
         int imm;
-        public static new readonly string[] instructions = { "addi", "subi", "ori", "sli", "sri", "lw", "sw", "jalr" };
+        public static new readonly string[] instructions = { "addi", "subi","ori", "sli", "sri", "lw", "sw", "jalr" };
         public IInstruction(string inst, int line, uint rs1, uint rd, int imm)
         {
             opType = 1;
@@ -327,8 +329,7 @@ namespace AssemblerRIBJ
         public override string getMachineCode(bool seperators)
         {
             string sep = (seperators) ? "-" : "";
-            string inst = (toBianary(imm, 16) + sep + toUBianary(rs1, 5) + sep + toUBianary(rd, 5) + sep + getTypeCode());
-            return inst.PadLeft(32, inst[0]);
+            return (toBianary(imm, 16) +sep+ toUBianary(rs1, 5) + sep + toUBianary(rd, 5) + sep + getTypeCode()).PadLeft(32, '0');
         }
     }
 
@@ -399,8 +400,7 @@ namespace AssemblerRIBJ
         public override string getMachineCode(bool seperators)
         {
             string sep = (seperators) ? "-" : "";
-            string inst = (toBianary((lable.line - lineNum) * 2, 16) + sep + toUBianary(rs2, 5) + sep + toUBianary(rs1, 5) + sep + getTypeCode());
-            return inst.PadLeft(32, inst[0]);
+            return (toBianary((lable.line -lineNum) * 2, 16) +sep+ toUBianary(rs2, 5) +sep+ toUBianary(rs1, 5) +sep+ getTypeCode()).PadLeft(32, '0');
         }
     }
     /// <summary>
@@ -449,8 +449,7 @@ namespace AssemblerRIBJ
         public override string getMachineCode(bool seperators)
         {
             string sep = (seperators) ? "-" : "";
-            string inst = (toBianary((lable.line - lineNum) * 2, 21) + sep + toUBianary(rd, 5) + sep + getTypeCode());
-            return inst.PadLeft(32, inst[0]);
+            return (toBianary((lable.line - lineNum) * 2, 16) +sep+ toUBianary(rd, 5) +sep+ getTypeCode()).PadLeft(32, '0');
         }
     }
 }

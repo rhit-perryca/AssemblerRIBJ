@@ -23,7 +23,7 @@ namespace AssemblerRIBJ
             string[] lines = input.Lines;
             try
             {
-                string[] bin = Assembler.assembleCode(lines,showOriginal.Checked,seps.Checked,lineNumbers.Checked);
+                string[] bin = Assembler.assembleCode(lines,showOriginal.Checked,seps.Checked,lineNumbers.Checked,showHex.Checked);
                 for(int i = 0; i< bin.Length;i++)
                 {
                     bin[i] = bin[i];
@@ -47,5 +47,6 @@ namespace AssemblerRIBJ
         {
 
         }
+
     }
 }

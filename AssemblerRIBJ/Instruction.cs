@@ -31,7 +31,7 @@ namespace AssemblerRIBJ
     {
         public static readonly string[] instructions;
         public static bool hasInst(string inst) { return false; }
-        public abstract string getMachineCode(bool seperators);
+        public abstract string getMachineCode(bool seperators,bool hex);
 
         /// <summary>
         /// Gets the type code for instruction
@@ -258,12 +258,20 @@ namespace AssemblerRIBJ
         /// gets the machine code for the line
         /// </summary>
         /// <returns>machine code as a string</returns>
-        public override string getMachineCode(bool seperators)
+        public override string getMachineCode(bool seperators,bool hex)
         {
             string rs2Bin = toUBianary(rs2, 5), rs1Bin = toUBianary(rs1, 5), rdBin = toUBianary(rd, 5);
             string code = getTypeCode();
             string sep = (seperators) ? "-" : "";
-            return (rs2Bin + sep + rs1Bin + sep + rdBin + sep + code).PadLeft(32, '0');
+            string inst = (rs2Bin + sep + rs1Bin + sep + rdBin + sep + code).PadLeft(32, '0');
+
+            if (hex)
+            {
+
+                inst = Convert.ToInt32(inst, 2).ToString("X").PadLeft(8,'0');
+                return inst;
+            }
+            return inst;
         }
     }
     /// <summary>
@@ -324,10 +332,16 @@ namespace AssemblerRIBJ
         /// gets the machine code for the line
         /// </summary>
         /// <returns>machine code as a string</returns>
-        public override string getMachineCode(bool seperators)
+        public override string getMachineCode(bool seperators,bool hex)
         {
             string sep = (seperators) ? "-" : "";
             string inst = (toBianary(imm, 16) + sep + toUBianary(rs1, 5) + sep + toUBianary(rd, 5) + sep + getTypeCode());
+            if (hex)
+            {
+
+                inst = Convert.ToInt32(inst, 2).ToString("X").PadLeft(8, '0');
+                return inst;
+            }
             return inst.PadLeft(32, inst[0]);
         }
     }
@@ -366,6 +380,7 @@ namespace AssemblerRIBJ
             this.rs1 = rs1;
             this.rs2 = rs2;
             this.lable = lable;
+            opType = 2;
             this.lineNum = line;
             if (!hasInst(inst))
                 throw new InstructionError(line, $"{inst} is not a valid instruction");
@@ -395,10 +410,16 @@ namespace AssemblerRIBJ
         /// gets the machine code for the line
         /// </summary>
         /// <returns>machine code as a string</returns>
-        public override string getMachineCode(bool seperators)
+        public override string getMachineCode(bool seperators,bool hex)
         {
             string sep = (seperators) ? "-" : "";
-            string inst = (toBianary((lable.line - lineNum) * 2, 16) + sep + toUBianary(rs2, 5) + sep + toUBianary(rs1, 5) + sep + getTypeCode());
+            string inst = (toBianary((lable.line - lineNum), 16) + sep + toUBianary(rs2, 5) + sep + toUBianary(rs1, 5) + sep + getTypeCode());
+            if (hex)
+            {
+
+                inst = Convert.ToInt32(inst, 2).ToString("X").PadLeft(8, '0');
+                return inst;
+            }
             return inst.PadLeft(32, inst[0]);
         }
     }
@@ -416,6 +437,7 @@ namespace AssemblerRIBJ
             this.rd = rd;
             this.lable = lable;
             this.lineNum = lineNum;
+            opType = 3;
             if (!hasInst(inst))
                 throw new InstructionError(line, $"{inst} is not a valid instruction");
             for (int i = 0; i < instructions.Length; i++)
@@ -444,10 +466,16 @@ namespace AssemblerRIBJ
         /// gets the machine code for the line
         /// </summary>
         /// <returns>machine code as a string</returns>
-        public override string getMachineCode(bool seperators)
+        public override string getMachineCode(bool seperators,bool hex)
         {
             string sep = (seperators) ? "-" : "";
-            string inst = (toBianary((lable.line - lineNum) * 2, 21) + sep + toUBianary(rd, 5) + sep + getTypeCode());
+            string inst = (toBianary((lable.line - lineNum), 21) + sep + toUBianary(rd, 5) + sep + getTypeCode());
+            if (hex)
+            {
+
+                inst = Convert.ToInt32(inst, 2).ToString("X").PadLeft(8, '0');
+                return inst;
+            }
             return inst.PadLeft(32, inst[0]);
         }
     }

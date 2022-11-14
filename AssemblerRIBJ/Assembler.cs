@@ -5,7 +5,7 @@ namespace AssemblerRIBJ
 {
     internal class Assembler
     {
-        public static string[] assembleCode(string[] code, bool showOriginal, bool showSeperators, bool lineNumbers)
+        public static string[] assembleCode(string[] code, bool showOriginal, bool showSeperators, bool lineNumbers,bool showHex)
         {
             List<Lable> lables = new List<Lable>();
             int lineCounterLable = 0;
@@ -42,18 +42,18 @@ namespace AssemblerRIBJ
                 else
                 {
                     Instruction inst = Instruction.getInstruction(code[i].Replace(" ", ""), lineCounter + 1, lables);
-                    codeOut.Add(((lineNumbers) ? $"{lineCounter + 1}: " : "") + inst.getMachineCode(showSeperators) + ((showOriginal) ? $"      #{code[i]}" : ""));
+                    codeOut.Add(((lineNumbers) ? $"{lineCounter + 1}: " : "") + inst.getMachineCode(showSeperators,showHex) + ((showOriginal) ? $"      #{code[i]}" : ""));
                     lineCounter++;
                 }
 
             }
             return codeOut.ToArray();
         }
-        public static void writeMachineCodeToFile(string[] code, bool showOriginal, bool seps, bool lineNumbers)
+        public static void writeMachineCodeToFile(string[] code, bool showOriginal, bool seps, bool lineNumbers,bool showHex)
         {
             try
             {
-                string[] machineCode = assembleCode(code, showOriginal, seps, lineNumbers);
+                string[] machineCode = assembleCode(code, showOriginal, seps, lineNumbers,showHex);
                 File.WriteAllLines("out.txt", machineCode);
             }
             catch (InstructionError e)

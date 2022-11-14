@@ -61,12 +61,12 @@ namespace AssemblerRIBJ.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Bitmap pngtree_glossy_button_2d_and_3d_buttons_for_mobile_game_ui_png_image_2332155 {
+        internal static System.Drawing.Icon download {
             get {
-                object obj = ResourceManager.GetObject("pngtree_glossy_button_2d_and_3d_buttons_for_mobile_game_ui_png_image_2332155", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("download", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

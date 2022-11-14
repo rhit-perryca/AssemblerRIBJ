@@ -23,7 +23,11 @@ namespace AssemblerRIBJ
             string[] lines = input.Lines;
             try
             {
-                string[] bin = Assembler.assembleCode(lines,showOriginal.Checked,seps.Checked);
+                string[] bin = Assembler.assembleCode(lines,showOriginal.Checked,seps.Checked,lineNumbers.Checked);
+                for(int i = 0; i< bin.Length;i++)
+                {
+                    bin[i] = bin[i];
+                }
                 output.Lines = bin;
             }
             catch(InstructionError error)
@@ -34,12 +38,12 @@ namespace AssemblerRIBJ
             }
         }
 
-        private void seps_CheckedChanged(object sender, EventArgs e)
+        private void copy_Click(object sender, EventArgs e)
         {
-
+            System.Windows.Forms.Clipboard.SetText(output.Text);
         }
 
-        private void showOriginal_CheckedChanged(object sender, EventArgs e)
+        private void lineNumbers_CheckedChanged(object sender, EventArgs e)
         {
 
         }

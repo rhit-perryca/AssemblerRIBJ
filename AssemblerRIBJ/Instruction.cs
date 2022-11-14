@@ -314,6 +314,7 @@ namespace AssemblerRIBJ
             this.rs2 = rs2;
             this.lable = lable;
             this.lineNum = line;
+            opType = 2;
             if (!hasInst(inst))
                 throw new InstructionError(line, $"{inst} is not a valid instruction");
             for (int i = 0; i < instructions.Length; i++)
@@ -361,6 +362,7 @@ namespace AssemblerRIBJ
         {
             this.rd = rd;
             this.lable = lable;
+            opType = 3;
             this.lineNum = lineNum;
             if (!hasInst(inst))
                 throw new InstructionError(line, $"{inst} is not a valid instruction");

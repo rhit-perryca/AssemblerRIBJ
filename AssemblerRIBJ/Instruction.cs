@@ -303,7 +303,7 @@ namespace AssemblerRIBJ
             opType = 1;
             rs1 = 0;
             this.rd = rd;
-            imm = (lable.line - line) * 2;
+            imm = (lable.line - line)-1;
             if (!hasInst(inst))
                 throw new InstructionError(line, $"{inst} is not a valid instruction");
             for (int i = 0; i < instructions.Length; i++)
@@ -413,7 +413,7 @@ namespace AssemblerRIBJ
         public override string getMachineCode(bool seperators,bool hex)
         {
             string sep = (seperators) ? "-" : "";
-            string inst = (toBianary((lable.line - lineNum), 16) + sep + toUBianary(rs2, 5) + sep + toUBianary(rs1, 5) + sep + getTypeCode());
+            string inst = (toBianary((lable.line - lineNum)-1, 16) + sep + toUBianary(rs2, 5) + sep + toUBianary(rs1, 5) + sep + getTypeCode());
             if (hex)
             {
 
@@ -469,7 +469,7 @@ namespace AssemblerRIBJ
         public override string getMachineCode(bool seperators,bool hex)
         {
             string sep = (seperators) ? "-" : "";
-            string inst = (toBianary((lable.line - lineNum), 21) + sep + toUBianary(rd, 5) + sep + getTypeCode());
+            string inst = (toBianary((lable.line - lineNum-1), 21) + sep + toUBianary(rd, 5) + sep + getTypeCode());
             if (hex)
             {
 
